@@ -28,7 +28,8 @@ const getApiBaseUrl = () => {
   }
 
   // Para producción
-  return "https://tu-api-real.com";
+  return "https://reporte-ciudadano-15eb46ea2557.herokuapp.com";
+
 };
 
 export const API_BASE_URL = getApiBaseUrl();
