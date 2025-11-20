@@ -2,6 +2,7 @@ import psycopg2
 import bcrypt
 from dotenv import load_dotenv
 import os
+from urllib.parse import urlparse
 
 # Load environment variables from .env file
 load_dotenv()
@@ -15,6 +16,14 @@ def load_db():
         psycopg2.connection: Database connection object
     """
     try:
+        # Prefer Heroku DATABASE_URL if it exists
+        database_url = os.getenv("DATABASE_URL")
+
+        if database_url:
+            # Heroku case
+            return psycopg2.connect(database_url, connect_timeout=5)
+
+        # Local development (fallback to individual vars)
         conn = psycopg2.connect(
             dbname=os.getenv("DATABASE"),
             user=os.getenv("USER"),
